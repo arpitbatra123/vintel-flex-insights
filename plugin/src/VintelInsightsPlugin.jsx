@@ -24,8 +24,8 @@ export default class VintelInsightsPlugin extends FlexPlugin {
 
       console.log("## worker call SID ", worker_callsid);
 
-      const FUNCTION_URL = process.env.REACT_APP_FUNCTION_URL;
-      const voiceSID = process.env.REACT_APP_VOICE_SID;
+      const FUNCTION_URL = "<<server-url>>/get-redacted-recording";
+      const voiceSID = "GA**"; // sid of voice transcription service
 
       //get existing task attributes
       const conversations = attributes.conversations || {};
@@ -47,7 +47,6 @@ export default class VintelInsightsPlugin extends FlexPlugin {
         },
       };
       console.log(newAttributes);
-      console.log('GGGGG - End');
 
       //update task attributes
       task.setAttributes(newAttributes);

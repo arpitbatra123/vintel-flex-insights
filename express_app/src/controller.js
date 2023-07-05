@@ -46,9 +46,9 @@ exports.vintel = async function vintel(event, callback) {
   console.log("Get recording for call SID ", callsid);
 
   // Perform some logic to define the headers
-  const headers = {
+  const hdrs = {
     'ngrok-skip-browser-warning': '69420',
-    'Access-Control-Allow-Origin': 'https://flex.twilio.com',
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Content-Type': 'application/json',
@@ -57,8 +57,8 @@ exports.vintel = async function vintel(event, callback) {
   };
 
   let mediaURL = null;
-  const ACCOUNT_SID = cfg.ACCOUNT_SID;
-  const AUTH_TOKEN = cfg.AUTH_TOKEN;
+  const ACCOUNT_SID = "AC**";
+  const AUTH_TOKEN = "<<token>>";
 
   const tSID = await getTranscript(
     voicesid,
@@ -66,7 +66,6 @@ exports.vintel = async function vintel(event, callback) {
     ACCOUNT_SID,
     AUTH_TOKEN
   );
-  console.log("tSID", tSID);
 
   if (tSID) {
     mediaURL = await getMedia(
@@ -76,11 +75,7 @@ exports.vintel = async function vintel(event, callback) {
       AUTH_TOKEN
     );
   }
-  console.log("mediaURL", mediaURL);
 
-
-  callback(headers, { media_url: mediaURL, });
-
-
+  return [hdrs, mediaURL]
+  
 }
-

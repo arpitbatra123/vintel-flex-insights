@@ -19,20 +19,25 @@ router.options('/get-redacted-recording', (req, res) => {
   res.sendStatus(200);
 });
 
-// Define the route
-router.get('/get-redacted-recording', (req, res) => {
-  console.log("rcvd request headers",req.headers);
-  // Call the vintel function with the JSON object
-  vintel(req.query, (headers, media_url) => {
-    // Set the HTTP headers
-    res.set(headers);
-    res.sendStatus(200);
-    // Send the JSON object as the response
-    res.json(media_url);
-    
 
-    console.log("response headers ",res);
-  });
+// This is a test route to check if server is running
+router.get('/test', (_req,res)=>{
+  res.json({"data":"hello"})
+})
+
+// Define the route
+router.get('/get-redacted-recording', async (req, res) => {
+  const [hdr, mediaURL] = await vintel(req.query) 
+ 
+    Object.keys(hdr).forEach(k=>{
+      res.setHeader(k, hdr[k])
+    })
+
+    // Send the JSON object as the response
+    res.json({
+      "media_url": mediaURL
+    });
+  
 });
 
 module.exports = router;
